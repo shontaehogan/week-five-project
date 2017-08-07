@@ -59,4 +59,53 @@ let remainingGuesses = 8
 let win = "Winner!!!"
 let lose = "Sorry, better luck next time..."
 
+// status check
+app.get('/', function(req, res) {
 console.log(randomWord);
+
+req.session.randomWord = randomWord
+console.log(req.session)
+
+res.render('index', {
+  dashes: dashes,
+  guessed: guessed,
+  remainingGuesses: remainingGuesses,
+  win: winner,
+  lose: loser
+})
+})
+
+// guess a letter
+app.post('/', function(req, res) {
+  let letter = req.body.letter
+  guessed.push(letter)
+
+// if random word contains guessed letters
+if(!randomWord.includes(letter)) {
+// subtract one from remainingGuesses if wrong letter guessed
+  remainingGuesses -= 1
+}
+
+// loop through word's letters
+dashes = ''
+for(let i = 0; i < randomWord.length; i++) {
+  let letter = randomWord[i]
+  if(guessed.includes(letter)) {
+    dashes += letter
+  } else {
+    dashes += '_'
+  }
+}
+
+if(!dashes.includes('_')) {
+  res.render('win', {message: win})
+} else if (remainingGuesses === 0) {
+  res.render('lose', {message: lose})
+} else {
+  res.redirect('/')
+}
+})
+
+app.listen(3000, function() {
+  console.log("It's all good, you got this!!!");
+})
