@@ -18,5 +18,13 @@
     "session": "^0.1.0"
   },
   "devDependencies": {},
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shontaehogan/week-five-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shontaehogan/week-five-project/issues"
+  },
+  "homepage": "https://github.com/shontaehogan/week-five-project#readme"
 }

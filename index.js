@@ -18,7 +18,7 @@ const words = fs
 
 // mustache-express as template engine
 app.engine('mustache', mustacheExpress());
-app.set('views', '.views'); //********check path
+app.set('views', 'views'); //********check path
 app.set('view engine', 'mustache');
 
 // static files
@@ -49,35 +49,36 @@ app.use((req, res, next) => {
 
 // variables
 
-let guessed = []
+const guessed = []
 
 const randomWord = words[Math.floor(Math.random() * words.length)];
+// const randomWordLength = randomWord.split('');
 
-let dashes = "_"
+let dashes = " _ "
   .repeat(randomWord.length);
 let remainingGuesses = 8
-let win = "Winner!!!"
-let lose = "Sorry, better luck next time..."
+let winner = "Winner!!!"
+let loser = "Sorry, better luck next time..."
 
 // status check
 app.get('/', function(req, res) {
 console.log(randomWord);
 
 req.session.randomWord = randomWord
-console.log(req.session)
+// console.log(req.session)
 
-res.render('index', {
+res.render('home', {
   dashes: dashes,
   guessed: guessed,
   remainingGuesses: remainingGuesses,
-  win: winner,
-  lose: loser
+  winner: winner,
+  loser: loser
 })
 })
 
 // guess a letter
 app.post('/', function(req, res) {
-  let letter = req.body.letter
+  const letter = req.body.letter
   guessed.push(letter)
 
 // if random word contains guessed letters
@@ -89,23 +90,23 @@ if(!randomWord.includes(letter)) {
 // loop through word's letters
 dashes = ''
 for(let i = 0; i < randomWord.length; i++) {
-  let letter = randomWord[i]
+  const letter = randomWord[i]
   if(guessed.includes(letter)) {
     dashes += letter
   } else {
-    dashes += '_'
+    dashes += ' _ '
   }
 }
 
-if(!dashes.includes('_')) {
-  res.render('win', {message: win})
+if(!dashes.includes(' _ ')) {
+  res.render('playAgain', {message: winner})
 } else if (remainingGuesses === 0) {
-  res.render('lose', {message: lose})
+  res.render('playAgain', {message: loser})
 } else {
   res.redirect('/')
 }
 })
 
-// app.listen(3000, function() {
-//   console.log("It's all good, you got this!!!");
-// })
+app.listen(3000, function() {
+  console.log("It's all good, you got this!!!")
+})
