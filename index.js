@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 
 // variables
 
-const guessed = []
+let guessed = []
 
 const randomWord = words[Math.floor(Math.random() * words.length)];
 // const randomWordLength = randomWord.split('');
@@ -65,7 +65,7 @@ app.get('/', function(req, res) {
 console.log(randomWord);
 
 req.session.randomWord = randomWord
-// console.log(req.session)
+console.log(req.session)
 
 res.render('home', {
   dashes: dashes,
@@ -86,6 +86,7 @@ if(!randomWord.includes(letter)) {
 // subtract one from remainingGuesses if wrong letter guessed
   remainingGuesses -= 1
 }
+  req.session.remainingGuesses = remainingGuesses
 
 // loop through word's letters
 dashes = ''
@@ -97,8 +98,11 @@ for(let i = 0; i < randomWord.length; i++) {
     dashes += ' _ '
   }
 }
+req.session.dashes = dashes
+
 
 if(!dashes.includes(' _ ')) {
+  req.session.newGame = true
   res.render('playAgain', {message: winner})
 } else if (remainingGuesses === 0) {
   res.render('playAgain', {message: loser})
@@ -108,5 +112,5 @@ if(!dashes.includes(' _ ')) {
 })
 
 app.listen(3000, function() {
-  console.log("It's all good, you got this!!!")
+  console.log("It's all good, you got this!!!");
 })

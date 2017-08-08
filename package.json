@@ -18,7 +18,7 @@
     "session": "^0.1.0"
   },
   "devDependencies": {},
-  "description": "",
+  "description": "You will implement the game Mystery Word as a web application. In your game, you will be playing against the computer.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shontaehogan/week-five-project.git"
