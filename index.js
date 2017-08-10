@@ -78,11 +78,11 @@ res.render('home', {
 
 // guess a letter
 app.post('/', function(req, res) {
-  const letter = req.body.letter
-  guessed.push(letter)
+  const letters = req.body.letters
+  guessed.push(letters)
 
 // if random word contains guessed letters
-if(!randomWord.includes(letter)) {
+if(!randomWord.includes(letters)) {
 // subtract one from remainingGuesses if wrong letter guessed
   remainingGuesses -= 1
 }
@@ -91,9 +91,9 @@ if(!randomWord.includes(letter)) {
 // loop through word's letters
 dashes = ''
 for(let i = 0; i < randomWord.length; i++) {
-  const letter = randomWord[i]
-  if(guessed.includes(letter)) {
-    dashes += letter
+  const letters = randomWord[i]
+  if(guessed.includes(letters)) {
+    dashes += letters
   } else {
     dashes += ' _ '
   }
